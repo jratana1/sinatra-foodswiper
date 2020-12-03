@@ -3,4 +3,7 @@ class User < ActiveRecord::Base
     has_many :photos
     has_many :likes, dependent: :destroy
     has_many :liked_restaurants, through: :likes, source: :restaurant
+
+    extend Slugifiable::ClassMethods
+    include Slugifiable::InstanceMethods
   end
