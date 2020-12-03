@@ -4,8 +4,8 @@ class CreatePhotos < ActiveRecord::Migration
       t.string :url
       t.integer :restaurant_id
       t.integer :user_id
-      # t.integer :leftswipes
-      # t.integer :rightswipes
+      t.integer :leftswipes
+      t.integer :rightswipes
       t.timestamps null: false
     end
   end

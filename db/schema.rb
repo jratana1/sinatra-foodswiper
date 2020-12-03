@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(version: 20201203051958) do
     t.string   "url"
     t.integer  "restaurant_id"
     t.integer  "user_id"
+    t.integer  "leftswipes"
+    t.integer  "rightswipes"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end
