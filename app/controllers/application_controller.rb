@@ -17,4 +17,27 @@ class ApplicationController < Sinatra::Base
     erb :swipe
   end
 
+  get '/login' do
+    if Helpers.is_logged_in?(session)
+      user = User.find(session[:user_id])
+        redirect "/users/#{user.slug}"
+    else
+        erb :"sessions/login"
+    end
+  end
+  
+  post "/login" do
+    user = User.find_by(:username => params[:username])
+        if user && user.authenticate(params[:password])
+            session[:user_id] = user.id
+            redirect "/users/#{user.slug}"
+        else
+            redirect "/login"
+        end
+  end
+
+  get "/logout" do
+    session.clear
+    redirect "/login"
+  end
 end
