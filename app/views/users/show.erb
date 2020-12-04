@@ -6,20 +6,36 @@
 5. show list of friends that like the same restaurants.
 
 <%end%> 
-<h1>You're logged in as <%=@user.name%></h1>
 
-<h3>Click
 <% if Helpers.current_user(session).id == @user.id %>
+<h3>Here are all the restaurants you want to eat at:</h3>
+    <% @user.liked_restaurants.each do |restaurant| %>
+      <li><%=restaurant.name%></li>
+    <% end %>
+
 <form action="/users/<%=@user.slug%>/edit" method="get">
   <input type="submit" name="Edit" value= "Edit Profile">
 </form>
-<br>
+
+<% else %>
+<h5>You're logged in as <%=User.find(session[:user_id]).name%></h5>
+
+<h3>Here are all the restaurants <%=@user.name%> wants to eat at:</h3>
+    <ol>
+    <% @user.liked_restaurants.each do |restaurant| %>
+      <li><%=restaurant.name%></li>
+    <% end %>
+    </ol>
 <% end %>
+
+<br>
+
 <form action="/swipe" method="get">
   <input type="submit" name="swipe" value= "Let's Swipe!!">
 </form>
 
 <br>
+
 <form action="/logout" method="get">
   <input type="submit" name="logout" value= "Log-out?">
 </form>

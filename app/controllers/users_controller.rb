@@ -27,6 +27,7 @@ class UsersController < ApplicationController
   end
   
   get "/users/:slug" do
+
     @user = User.find_by_slug(params[:slug])
     erb :'users/show'
   end
@@ -42,9 +43,9 @@ class UsersController < ApplicationController
   end
 
   
-  post '/users/:slug' do #why isnt patch working?
+  patch '/users/:slug' do #why isnt patch working?
     user = User.find_by_slug(params[:slug])
-    binding.pry
+
     if params[:user].values.any? &:empty?
         redirect "/users/#{user.slug}/edit"
     end
