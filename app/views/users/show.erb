@@ -1,5 +1,25 @@
-<h1>This is the show page for an individual instance of your model.</h1>
+<% if false%>
+1. show list of liked restaurants
+2. button to edit profile (Need to learn how to change password)
+3. list of restaurant profiles (can create and add photo to restaurant, can like restaurant directly)
+4. show list of users sorted by number of restaurants that are matching (cap at top 10 users)
+5. show list of friends that like the same restaurants.
 
+<%end%> 
+<h1>You're logged in as <%=@user.name%></h1>
+
+<h3>Click
+<% if Helpers.current_user(session).id == @user.id %>
+<form action="/users/<%=@user.slug%>/edit" method="get">
+  <input type="submit" name="Edit" value= "Edit Profile">
+</form>
+<br>
+<% end %>
+<form action="/swipe" method="get">
+  <input type="submit" name="swipe" value= "Let's Swipe!!">
+</form>
+
+<br>
 <form action="/logout" method="get">
   <input type="submit" name="logout" value= "Log-out?">
 </form>
