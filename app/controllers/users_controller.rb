@@ -15,14 +15,13 @@ class UsersController < ApplicationController
   end
   
   post "/signup" do 
-    user = User.new(:username => params[:username], :password => params[:password], :email => params[:email])
-  
-    if params[:username] == "" || params[:password] == "" || params[:email] == ""
-        redirect "/signup"
+    user = User.new(params[:user])  
+    if user.save
+      session[:user_id] = user.id
+      redirect "/users/#{user.slug}"
     else  
-        user.save
-        session[:user_id] = user.id
-        redirect "/users/#{user.slug}"
+      @error = user.errors.full_messages.join(" - ") #need to use flash[:notice]
+      redirect "/signup"    
     end
   end
   
