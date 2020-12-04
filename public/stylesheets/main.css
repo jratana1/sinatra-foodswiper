@@ -1,7 +1,6 @@
 @media screen {
   /* --- Reset Styles --- */
   * {
-    list-style: decimal inside;
     margin: 0;
     padding: 0;
   }
@@ -49,6 +48,16 @@
 
   p {
     margin-bottom: 18px;
+  }
+
+  ul {
+    list-style-type:none;
+    list-style-position: inside;
+  }
+
+  ol {
+    list-style-type: decimal;
+    list-style-position: inside;
   }
 
   .main {
@@ -113,3 +122,5 @@
     line-height: 24px;
   }
 }
+
+

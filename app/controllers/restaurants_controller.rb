@@ -16,8 +16,8 @@ class RestaurantsController < ApplicationController
     redirect "/restaurants"
   end
 
-  # GET: /restaurants/5
   get "/restaurants/:slug" do
+    @restaurant = Restaurant.find_by_slug(params[:slug])
     erb :"/restaurants/show.html"
   end
 

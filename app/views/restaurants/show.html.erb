@@ -1,1 +1,23 @@
-<h1>This is the show page for an individual instance of your model.</h1>
+<h1><%=@restaurant.name%></h1>
+<img src=<%=@restaurant.photos[0].url%> alt="Lots of Yummy Food" class="restaurant_image" width="500" height="600">
+<div class="sidebar">
+<ul>
+    <li><%=@restaurant.name%></li>
+    <li><%=@restaurant.display_address%></li>
+    <li><%=@restaurant.display_phone%></li>
+    <li><%=@restaurant.rating%>/5 stars</li>
+    <li><a href="<%=@restaurant.url%>"><%=@restaurant.name%> Website</a></li>
+    <br>
+    <li><form action="/restaurants/<%=@restaurant.slug=>/edit" method="get">
+        <input type="submit" name="edit_restaurant" value= "Edit Restaurant Information">
+        </form>
+        </li>
+    <br>
+    <li><form action="/photos/new" method="get">
+    <input type="submit" name="post_phot" value= "Post a Photo">
+    </form>
+    </li>
+
+</ul>
+</div>
+
