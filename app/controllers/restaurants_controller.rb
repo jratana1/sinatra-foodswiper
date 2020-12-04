@@ -2,6 +2,7 @@ class RestaurantsController < ApplicationController
 
   # GET: /restaurants
   get "/restaurants" do
+    @restaurants = Restaurant.all
     erb :"/restaurants/index.html"
   end
 
@@ -16,7 +17,7 @@ class RestaurantsController < ApplicationController
   end
 
   # GET: /restaurants/5
-  get "/restaurants/:id" do
+  get "/restaurants/:slug" do
     erb :"/restaurants/show.html"
   end
 

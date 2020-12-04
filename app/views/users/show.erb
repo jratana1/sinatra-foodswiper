@@ -1,21 +1,29 @@
 <% if false%>
-1. show list of liked restaurants
+1. change list of restaurants into a table
 2. button to edit profile (Need to learn how to change password)
-3. list of restaurant profiles (can create and add photo to restaurant, can like restaurant directly)
 4. show list of users sorted by number of restaurants that are matching (cap at top 10 users)
 5. show list of friends that like the same restaurants.
 
+
 <%end%> 
+<h3>Find something yummy:</h3>
+<form action="/swipe" method="get">
+  <input type="submit" name="swipe" value= "Let's Swipe!!">
+</form>
+<br>
 
 <% if Helpers.current_user(session).id == @user.id %>
-<h3>Here are all the restaurants you want to eat at:</h3>
-    <% @user.liked_restaurants.each do |restaurant| %>
-      <li><%=restaurant.name%></li>
-    <% end %>
-
 <form action="/users/<%=@user.slug%>/edit" method="get">
   <input type="submit" name="Edit" value= "Edit Profile">
 </form>
+<br>
+
+<h3>Here are all the restaurants you want to eat at:</h3>
+    <ol>
+      <% @user.liked_restaurants.each do |restaurant| %>
+        <li><a href="/restaurants/<%=restaurant.slug%>"><%=restaurant.name%></a> - <%=restaurant.liking_users.count%> foodies want to eat here</li>
+      <% end %>
+    </ol>
 
 <% else %>
 <h5>You're logged in as <%=User.find(session[:user_id]).name%></h5>
@@ -23,19 +31,24 @@
 <h3>Here are all the restaurants <%=@user.name%> wants to eat at:</h3>
     <ol>
     <% @user.liked_restaurants.each do |restaurant| %>
-      <li><%=restaurant.name%></li>
+      <li><a href="/restaurants/<%=restaurant.slug%>"><%=restaurant.name%></a> - <%=restaurant.liking_users.count%> foodies want to eat here</li>
     <% end %>
     </ol>
 <% end %>
-
 <br>
 
-<form action="/swipe" method="get">
-  <input type="submit" name="swipe" value= "Let's Swipe!!">
+<h3>Eaten somewhere?  Take a picture and post it!</h3>
+<form action="/photos/new" method="get">
+  <input type="submit" name="create_photo" value= "Post a Photo">
 </form>
 
-<br>
-
-<form action="/logout" method="get">
-  <input type="submit" name="logout" value= "Log-out?">
+<h3>Search all restaurants:</h3>
+<form action="/restaurants" method="get">
+  <input type="submit" name="restaurants" value= "Find a Place">
 </form>
+
+<h3>See where your friends are eating...FOMO:</h3>
+<form action="/users/friends" method="get">
+  <input type="submit" name="friends_list" value= "See Friends List">
+</form>
+

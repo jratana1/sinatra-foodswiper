@@ -1,1 +1,12 @@
-<h1>This is the Model's index page.</h1>
+<h1>Here are all the restaurants</h1>
+
+<ol>
+<% @restaurants.each do |restaurant| %>
+  <li><a href="/restaurants/<%=restaurant.slug%>"><%=restaurant.name%></a>  - <%=restaurant.liking_users.count%> foodies want to eat here</li>
+<% end %>
+</ol>
+
+<h3>Can't find a place? Post a photo and add it.</h3>
+<form action="/restaurants/new" method="get">
+  <input type="submit" name="create_restaurant" value= "Add a New Place">
+</form>

@@ -15,11 +15,17 @@
   </head>
   <body>
    <h1> Welcome to FoodSwiper</h1>
+        <form action="/users/<%=User.find(session[:user_id]).slug%>" method="get">
+          <input type="submit" name="user_homepage" value= "Home">
+        </form>
     <div class="wrapper">
 
         <%= yield %>
 
       <footer class="branding">
+        <form action="/logout" method="get">
+          <input type="submit" name="logout" value= "Log-out?">
+        </form>
         <small>&copy; 2020 <strong>SinatraFoodswiper</strong></small>
       </footer>
     </div>

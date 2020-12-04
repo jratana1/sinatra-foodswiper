@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
 
   # GET: /users
-  get "/users" do
+  get "/users/friends" do
     #make a friends list
-    erb :"/users/index.html"
+    erb :"/users/index"
   end
 
   get '/signup' do
