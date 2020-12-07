@@ -5,10 +5,11 @@ class CreateRestaurants < ActiveRecord::Migration
       t.string :display_phone
       t.integer :rating
       t.string :url
-      t.string :display_address
+      t.string :address
       t.string :yelp_id
       t.string :zip_code
       t.string :city
+      t.string :state
       t.timestamps null: false
     end
   end

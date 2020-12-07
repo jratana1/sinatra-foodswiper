@@ -35,12 +35,13 @@ ActiveRecord::Schema.define(version: 20201203051958) do
     t.string   "display_phone"
     t.integer  "rating"
     t.string   "url"
-    t.string   "display_address"
+    t.string   "address"
     t.string   "yelp_id"
     t.string   "zip_code"
     t.string   "city"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.string   "state"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "users", force: :cascade do |t|

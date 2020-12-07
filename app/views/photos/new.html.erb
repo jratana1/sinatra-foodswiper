@@ -1,1 +1,67 @@
-<h1>Insert the form to create a new instance of your model.</h1>
+<% if Helpers.is_logged_in?(session) %>
+  <%= @error %>
+  <h1>Post a Photo</h1>
+    <% if params.key?("photo")%>
+    <form action="/photos" method="POST">
+      <label for="photo_url">Photo URL:</label>
+      <br>
+      <input id="photo_url" type="text" name="photo[url]">
+      <input id="hidden" type="hidden" name=photo[restaurant_id] value="<%=params[:photo][:restaurant_id]%>">
+      <input type="submit" value="Post Photo">
+  </form>
+
+    <%else%>
+
+      <form action="/photos" method="POST">
+        <label for="photo_url">Photo URL:</label>
+        <br>
+        <input id="photo_url" type="text" name="photo[url]">
+
+        <h3>Existing Restaurants</h3>
+        <label for="photo[restaurant_id]">Choose a Restaurant:</label>
+
+        <select name="photo[restaurant_id]" id="restaurant_id">
+          <% @restaurants.each do |restaurant| %>
+            <option value="<%=restaurant.id%>" name="photo[restaurant_id]" id="restaurant_id"><%= restaurant.name %></option>
+          <% end %>
+        </select>
+        <input type="submit" value="Post Photo">
+      </form>
+        
+        <br>
+
+        
+        <h3>Can't find a place?  Add a place and it's photo</h3>
+      <form action="/photos" method="POST">
+        <label for="photo_url">Photo URL:</label>
+        <br>
+        <input id="photo_url" type="text" name="photo[url]">
+        <br>
+          <label> Restaurant Name:</label>
+          <br>
+          <input  id="new_restaurant" type="text" name="restaurant[name]"></input>
+        <br>
+        <br>
+            <label>Address:</label>
+            <br>
+            <input id="restaurant_address" type="text" name="restaurant[address]"></input>
+            <br>
+            <label>City:</label>
+            <br>
+            <input id="restaurant_city" type="text" name="restaurant[city]"></input>
+            <br>
+            <label>State:</label>
+            <br>
+            <input id="restaurant_state" type="text" name="restaurant[state]"></input>
+            <br>
+            <label>Zipcode:</label>
+            <br>
+            <input id="restaurant_zipcode" type="text" name="restaurant[zip_code]"></input>
+        <br>
+        <br>
+        <input type="submit" value="Post Photo">
+      </form>
+    <%end%>
+<% else %>
+    <h1> You Must Be Logged in to Post a Photo</h1>
+<% end %>

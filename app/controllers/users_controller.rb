@@ -1,5 +1,7 @@
+require 'sinatra/base'
+require 'rack-flash'
 class UsersController < ApplicationController
-
+  use Rack::Flash
   # GET: /users
   get "/users/friends" do
     #make a friends list
@@ -27,7 +29,7 @@ class UsersController < ApplicationController
   end
   
   get "/users/:slug" do
-
+    #Restaurant.all.sort{|a, b| a.liking_users.count <=> b.liking_users.count}
     @user = User.find_by_slug(params[:slug])
     erb :'users/show'
   end
@@ -43,9 +45,16 @@ class UsersController < ApplicationController
   end
 
   
-  patch '/users/:slug' do #why isnt patch working?
+  patch '/users/:slug' do
     user = User.find_by_slug(params[:slug])
-
+ 
+    if user && user.authenticate(params[:password][:old_password])
+      user.password = params[:password][:new_password]
+      user.save
+    else
+      flash[:notice] = "Your password was incorrect!"
+      redirect "/users/#{user.slug}/edit"
+    end
     if params[:user].values.any? &:empty?
         redirect "/users/#{user.slug}/edit"
     end

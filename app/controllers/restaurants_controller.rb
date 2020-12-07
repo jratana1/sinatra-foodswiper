@@ -13,7 +13,7 @@ class RestaurantsController < ApplicationController
 
   # POST: /restaurants
   post "/restaurants" do
-    redirect "/restaurants"
+    redirect "/restaurants/<%=@restaurant.slug%>"
   end
 
   get "/restaurants/:slug" do
@@ -21,18 +21,15 @@ class RestaurantsController < ApplicationController
     erb :"/restaurants/show.html"
   end
 
-  # GET: /restaurants/5/edit
-  get "/restaurants/:id/edit" do
+  get "/restaurants/:slug/edit" do
     erb :"/restaurants/edit.html"
   end
 
-  # PATCH: /restaurants/5
-  patch "/restaurants/:id" do
+  patch "/restaurants/:slug" do
     redirect "/restaurants/:id"
   end
 
-  # DELETE: /restaurants/5/delete
-  delete "/restaurants/:id/delete" do
+  delete "/restaurants/:slug/delete" do
     redirect "/restaurants"
   end
 end

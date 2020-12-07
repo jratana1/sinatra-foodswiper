@@ -6,6 +6,7 @@
 
 
 <%end%> 
+<h1><%=@user.name%>'s profile</h1>
 <h3>Find something yummy:</h3>
 <form action="/swipe" method="get">
   <input type="submit" name="swipe" value= "Let's Swipe!!">
@@ -26,8 +27,6 @@
     </ol>
 
 <% else %>
-<h5>You're logged in as <%=User.find(session[:user_id]).name%></h5>
-
 <h3>Here are all the restaurants <%=@user.name%> wants to eat at:</h3>
     <ol>
     <% @user.liked_restaurants.each do |restaurant| %>
@@ -37,18 +36,20 @@
 <% end %>
 <br>
 
-<h3>Eaten somewhere?  Take a picture and post it!</h3>
-<form action="/photos/new" method="get">
-  <input type="submit" name="create_photo" value= "Post a Photo">
-</form>
+<div class="sidebar">
+  <h3>Eaten somewhere?  Take a picture and post it!</h3>
+  <form action="/photos/new" method="get">
+    <input type="submit" value= "Post a Photo">
+  </form>
 
-<h3>Search all restaurants:</h3>
-<form action="/restaurants" method="get">
-  <input type="submit" name="restaurants" value= "Find a Place">
-</form>
+  <h3>Search all restaurants:</h3>
+  <form action="/restaurants" method="get">
+    <input type="submit" name="restaurants" value= "Find a Place">
+  </form>
 
-<h3>See where your friends are eating...FOMO:</h3>
-<form action="/users/friends" method="get">
-  <input type="submit" name="friends_list" value= "See Friends List">
-</form>
+  <h3>See where your friends are eating...FOMO:</h3>
+  <form action="/users/friends" method="get">
+    <input type="submit" name="friends_list" value= "See Friends List">
+  </form>
 
+</div>
