@@ -9,6 +9,7 @@ class UsersController < ApplicationController
   end
 
   get '/signup' do
+    
     if Helpers.is_logged_in?(session)
         user = User.find(session[:user_id])
         flash[:notice] = "You are already logged in!"
@@ -73,6 +74,7 @@ class UsersController < ApplicationController
 
   delete '/users/:slug/delete' do
     User.find(session[:user_id]).destroy
+    session.clear
     flash[:notice] = "Your account has been deleted!"
     erb :"users/new"
   end

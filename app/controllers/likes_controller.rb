@@ -39,8 +39,13 @@ class LikesController < ApplicationController
     # DELETE: /likes/delete
     delete "/likes/delete" do
       restaurant = Restaurant.find(params[:like][:restaurant_id])
-      Like.find_by(user_id: session[:user_id],restaurant_id:"#{restaurant.id}").destroy
-      flash[:notice] = "You have unliked #{restaurant.name}."
-      redirect "/restaurants/#{restaurant.slug}"
+      like = Like.find_by(user_id: session[:user_id],restaurant_id:"#{restaurant.id}")
+      if like != nil
+        like.destroy
+        flash[:notice] = "You have unliked #{restaurant.name}."
+      else
+        flash[:notice] = "You already don't like #{restaurant.name}."
+      end
+        redirect "/restaurants/#{restaurant.slug}"
     end
   end
