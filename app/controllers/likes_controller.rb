@@ -1,5 +1,7 @@
+require 'sinatra/base'
+require 'rack-flash'
 class LikesController < ApplicationController
-
+  use Rack::Flash
     # GET: /likes
     get "/likes" do
       erb :"/likes/index.html"
@@ -7,12 +9,16 @@ class LikesController < ApplicationController
   
     # GET: /likes/new
     get "/likes/new" do
-      erb :"/users/new.html"
+      erb :"/likes/new.html"
     end
   
     # POST: /likes
     post "/likes" do
-      redirect "/likes"
+      
+      Like.create(user_id:session[:user_id], restaurant_id:params[:like][:restaurant_id])
+      restaurant = Restaurant.find(params[:like][:restaurant_id])
+      flash[:notice] = "You now like #{restaurant.name}."
+      redirect "/restaurants/#{restaurant.slug}"
     end
   
     # GET: /likes/5
@@ -30,8 +36,11 @@ class LikesController < ApplicationController
       redirect "/likes/:id"
     end
   
-    # DELETE: /likes/5/delete
-    delete "/likes/:id/delete" do
-      redirect "/likes"
+    # DELETE: /likes/delete
+    delete "/likes/delete" do
+      restaurant = Restaurant.find(params[:like][:restaurant_id])
+      Like.find_by(user_id: session[:user_id],restaurant_id:"#{restaurant.id}").destroy
+      flash[:notice] = "You have unliked #{restaurant.name}."
+      redirect "/restaurants/#{restaurant.slug}"
     end
   end

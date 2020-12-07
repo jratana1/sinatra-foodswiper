@@ -1,5 +1,7 @@
+require 'sinatra/base'
+require 'rack-flash'
 class PhotosController < ApplicationController
-
+  use Rack::Flash
   # GET: /photos
   get "/photos" do
     erb :"/photos/index.html"
@@ -14,15 +16,14 @@ class PhotosController < ApplicationController
 
   # POST: /photos
   post "/photos" do
-    binding.pry
     if params[:photo][:url] == ""
-      @error = "You did not input a url"
+      flash[:notice] = "You did not input a url!"
       erb :"/photos/new.html"
     end
     
     if params.key?("restaurant")  
       if params[:restaurant][:name] == ""
-        @error = "You did not input a restaurant name"
+        flash[:notice] = "You did not input a restaurant name!"
         erb :"/photos/new.html"
       end
       restaurant = Restaurant.create(params[:restaurant])
@@ -31,6 +32,7 @@ class PhotosController < ApplicationController
     end
     
     restaurant.photos << Photo.create(params[:photo])
+    flash[:notice] = "Photo/Restaurant has been added!"
     redirect "/restaurants/#{restaurant.slug}"
   end
 

@@ -11,6 +11,7 @@ class UsersController < ApplicationController
   get '/signup' do
     if Helpers.is_logged_in?(session)
         user = User.find(session[:user_id])
+        flash[:notice] = "You are already logged in!"
         redirect "/users/#{user.slug}"
     else
         erb :"users/new"
@@ -21,9 +22,10 @@ class UsersController < ApplicationController
     user = User.new(params[:user])  
     if user.save
       session[:user_id] = user.id
+      flash[:notice] = "Welcome, you have successfully signed up!"
       redirect "/users/#{user.slug}"
     else  
-      @error = user.errors.full_messages.join(" - ") #need to use flash[:notice]
+      flash[:notice] = "You must enter a password, username, and email!"
       redirect "/signup"    
     end
   end
@@ -56,14 +58,22 @@ class UsersController < ApplicationController
       redirect "/users/#{user.slug}/edit"
     end
     if params[:user].values.any? &:empty?
+      flash[:notice] = "Username or email was blank!"
         redirect "/users/#{user.slug}/edit"
     end
     if Helpers.is_logged_in?(session) && user.id == session[:user_id]
         user.update(params[:user])
+        flash[:notice] = "Your profile has been updated!"
         redirect "/users/#{user.slug}"
     else
+        flash[:notice] = "You are not logged in!"
         redirect "/login"
     end
   end
 
+  delete '/users/:slug/delete' do
+    User.find(session[:user_id]).destroy
+    flash[:notice] = "Your account has been deleted!"
+    erb :"users/new"
+  end
 end

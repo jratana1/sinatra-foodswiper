@@ -1,12 +1,24 @@
+<% if flash.has?(:notice) %>
+  <%= flash[:notice] %>
+<% end %>
+
 <h1><%=@restaurant.name%></h1>
-<img src=<%=@restaurant.photos[0].url%> alt="Lots of Yummy Food <%=@restaurant.photos[0].url%>" class="restaurant_image" width="500" height="600">
+
+<% @restaurant.photos.each do |photo| %>
+<img src=<%=photo.url%> alt="Lots of Yummy Food <%=photo.url%>" class="restaurant_image" width="500" height="600">
+<% end %>
+
 <div class="sidebar">
 <ul>
-    <li><%=@restaurant.name%></li>
+    <li><b><%=@restaurant.name%></b></li>
     <li><%=@restaurant.address%></li>
+    <% if @restaurant.city != nil %>
     <li><%=@restaurant.city%>, <%=@restaurant.state%> <%=@restaurant.zip_code%></li>
+    <% end %>
     <li><%=@restaurant.display_phone%></li>
+    <% if @restaurant.rating != nil %>
     <li><%=@restaurant.rating%>/5 stars</li>
+    <% end %>
     <li><a href="<%=@restaurant.url%>"><%=@restaurant.name%> Website</a></li>
     <br>
     <li><form action="/restaurants/<%=@restaurant.slug%>/edit" method="get">
@@ -14,10 +26,21 @@
         </form>
         </li>
     <br>
-    # action="/restaurants/@rest.slug/photos/new"
+
     <li><form action="/photos/new" method="get">
     <input id="hidden" type="hidden" name=photo[restaurant_id] value="<%=@restaurant.id%>">
     <input type="submit" value= "Post a Photo">
+    </form>
+    <br>
+    <form action="/likes" method="post">
+    <input id="hidden" type="hidden" name=like[restaurant_id] value="<%=@restaurant.id%>">
+    <input type="submit" value= "Like this Restaurant!">
+    </form>
+    <br>
+    <form action="/likes/delete" method="post">
+    <input id="hidden" type="hidden" name="_method" value="delete">
+    <input id="hidden" type="hidden" name=like[restaurant_id] value="<%=@restaurant.id%>">
+    <input type="submit" value= "UnLike">
     </form>
     </li>
 

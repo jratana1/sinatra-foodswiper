@@ -1,5 +1,7 @@
+require 'sinatra/base'
+require 'rack-flash'
 class RestaurantsController < ApplicationController
-
+  use Rack::Flash
   # GET: /restaurants
   get "/restaurants" do
     @restaurants = Restaurant.all

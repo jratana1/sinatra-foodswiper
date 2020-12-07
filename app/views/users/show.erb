@@ -1,11 +1,14 @@
 <% if false%>
 1. change list of restaurants into a table
-2. button to edit profile (Need to learn how to change password)
 4. show list of users sorted by number of restaurants that are matching (cap at top 10 users)
 5. show list of friends that like the same restaurants.
 
 
 <%end%> 
+<% if flash.has?(:notice) %>
+  <%= flash[:notice] %>
+<% end %>
+
 <h1><%=@user.name%>'s profile</h1>
 <h3>Find something yummy:</h3>
 <form action="/swipe" method="get">
