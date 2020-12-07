@@ -76,6 +76,6 @@ class UsersController < ApplicationController
     User.find(session[:user_id]).destroy
     session.clear
     flash[:notice] = "Your account has been deleted!"
-    erb :"users/new"
+    redirect "/users/new"
   end
 end

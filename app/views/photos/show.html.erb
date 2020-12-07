@@ -1,1 +1,10 @@
-<h1>This is the show page for an individual instance of your model.</h1>
+<% if flash.has?(:notice) %>
+  <%= flash[:notice] %>
+<% end %>
+
+<img src=<%=@photo.url%> alt="Lots of Yummy Food <%=@photo.url%>" class="restaurant_image" width="500" height="600">
+
+<form action="/photos/<%=@photo.id%>/delete" method="post">
+<input id="hidden" type="hidden" name="_method" value="delete">
+<input type="submit" value= "DELETE PHOTO">
+</form>

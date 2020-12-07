@@ -1,1 +1,10 @@
-<h1>This is the Model's index page.</h1>
+<% if flash.has?(:notice) %>
+  <%= flash[:notice] %>
+<% end %>
+
+<h1>Photo Gallery</h1>
+<ol>
+<% @user.photos.each do |photo| %>
+  <li><a href="/photos/<%=photo.id%>"><img src=<%=photo.url%> alt="Lots of Yummy Food <%=photo.url%>" class="restaurant_image" width="500" height="600"></a></li>
+<% end %>
+</ol>

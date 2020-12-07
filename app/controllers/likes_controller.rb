@@ -14,11 +14,15 @@ class LikesController < ApplicationController
   
     # POST: /likes
     post "/likes" do
-      
-      Like.create(user_id:session[:user_id], restaurant_id:params[:like][:restaurant_id])
-      restaurant = Restaurant.find(params[:like][:restaurant_id])
-      flash[:notice] = "You now like #{restaurant.name}."
-      redirect "/restaurants/#{restaurant.slug}"
+      if Helpers.is_logged_in?(session) 
+        Like.create(user_id:session[:user_id], restaurant_id:params[:like][:restaurant_id])
+        restaurant = Restaurant.find(params[:like][:restaurant_id])
+        flash[:notice] = "You now like #{restaurant.name}."
+        redirect "/restaurants/#{restaurant.slug}"
+      else
+        flash[:notice] = "You must login to Like restaurants"
+        redirect '/sessions/login'
+      end
     end
   
     # GET: /likes/5
@@ -38,14 +42,19 @@ class LikesController < ApplicationController
   
     # DELETE: /likes/delete
     delete "/likes/delete" do
-      restaurant = Restaurant.find(params[:like][:restaurant_id])
-      like = Like.find_by(user_id: session[:user_id],restaurant_id:"#{restaurant.id}")
-      if like != nil
-        like.destroy
-        flash[:notice] = "You have unliked #{restaurant.name}."
+      if Helpers.is_logged_in?(session)
+        restaurant = Restaurant.find(params[:like][:restaurant_id])
+        like = Like.find_by(user_id: session[:user_id],restaurant_id:"#{restaurant.id}")
+        if like != nil
+          like.destroy
+          flash[:notice] = "You have unliked #{restaurant.name}."
+        else
+          flash[:notice] = "You already don't like #{restaurant.name}."
+        end
+          redirect "/restaurants/#{restaurant.slug}"
       else
-        flash[:notice] = "You already don't like #{restaurant.name}."
+        flash[:notice] = "You must login to UnLike restaurants"
+        redirect '/sessions/login'
       end
-        redirect "/restaurants/#{restaurant.slug}"
     end
   end

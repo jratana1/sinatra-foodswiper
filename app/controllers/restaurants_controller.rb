@@ -8,16 +8,6 @@ class RestaurantsController < ApplicationController
     erb :"/restaurants/index.html"
   end
 
-  # GET: /restaurants/new
-  get "/restaurants/new" do
-    erb :"/restaurants/new.html"
-  end
-
-  # POST: /restaurants
-  post "/restaurants" do
-    redirect "/restaurants/<%=@restaurant.slug%>"
-  end
-
   get "/restaurants/:slug" do
     @restaurant = Restaurant.find_by_slug(params[:slug])
     erb :"/restaurants/show.html"
