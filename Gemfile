@@ -12,6 +12,9 @@ gem 'pry'
 gem 'bcrypt'
 gem 'tux'
 gem 'rack-flash3'
+gem "json"
+gem "http"
+gem "optparse"
 
 
 

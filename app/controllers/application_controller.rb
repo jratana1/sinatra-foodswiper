@@ -1,6 +1,7 @@
 require './config/environment'
 require 'rack-flash'
 
+
 class ApplicationController < Sinatra::Base
   use Rack::Flash
   configure do
@@ -13,20 +14,31 @@ class ApplicationController < Sinatra::Base
   get "/" do
     erb :welcome
   end
-
+  
   get "/swipe" do
-      
-    if params.key?("photo")
+    if params.key?(:location)
+    results = YelpApiAdapter.search(params[:location])
+    
+    end
+
+    if params[:swipe] == "Swipe Right"
       @swipe = "right"
       @photo = Photo.find(params[:photo][:id])
-      
+      @photo.rightswipes += 1
+      @photo.save
       @restaurant = Restaurant.find(@photo.restaurant_id)
+      Like.create(restaurant_id:@restaurant.id, user_id:session[:user_id])
       flash.now[:notice] = "You liked #{@restaurant.name}!"
       erb :"/swipe"
+    elsif params[:swipe] == "Swipe Left"
+      @photo = Photo.find(params[:photo][:id])
+      @photo.leftswipes += 1
+      @photo.save
+      @photo = Photo.find(Photo.pluck(:id).sample)
+      erb :"/swipe"
     else
-      @swipe = "left"
-      rand_num= rand(1..Photo.all.size)
-      @photo = Photo.find(rand_num)
+      
+      @photo = Photo.find(Photo.pluck(:id).sample)
       erb :"/swipe"
     end  
   end

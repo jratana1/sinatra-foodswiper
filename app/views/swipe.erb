@@ -30,11 +30,12 @@
 
 <form action="/swipe" method="get">
     <input id="hidden" type="hidden" name=photo[id] value="<%=@photo.id%>">
-    <input type="submit" value= "Swipe Right">
+    <input type="submit" name=[swipe] value= "Swipe Right">
 </form>
 
 <form action="/swipe" method="get">
-    <input type="submit" value= "Swipe Left">
+    <input id="hidden" type="hidden" name=photo[id] value="<%=@photo.id%>">    
+    <input type="submit" name=[swipe] value= "Swipe Left">
 </form>
 <% end %>
 
