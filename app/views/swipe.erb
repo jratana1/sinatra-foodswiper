@@ -2,3 +2,14 @@
 <li>Shows a random photo (logic in the application controller that retrieves random photo)</li>
 <li>button -> value=left  it redirects to swipe.erb</li>
 <li>button -> value=right it redirects to photo.restaurant page</li>
+</ol>
+<img src=<%=@photo.url%> alt="Lots of Yummy Food <%=@photo.url%>" class="restaurant_image" width="500" height="600">
+
+<form action="/swipe" method="get">
+    <input id="hidden" type="hidden" name=photo[id] value="<%=@photo.id%>">
+    <input type="submit" value= "Swipe Right">
+</form>
+
+<form action="/swipe" method="get">
+    <input type="submit" value= "Swipe Left">
+</form>

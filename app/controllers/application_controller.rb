@@ -15,6 +15,14 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/swipe" do
+    
+    if params.key?("photo")
+      @photo = Photo.find(params[:photo][:id])
+      erb :swipe
+    end
+    
+    rand_num= rand(1..Photo.all.size)
+    @photo = Photo.find(rand_num)
     erb :swipe
   end
 

@@ -14,11 +14,15 @@ class RestaurantsController < ApplicationController
   end
 
   get "/restaurants/:slug/edit" do
+    @restaurant = Restaurant.find_by_slug(params[:slug])
     erb :"/restaurants/edit.html"
   end
 
   patch "/restaurants/:slug" do
-    redirect "/restaurants/:id"
+    restaurant = Restaurant.find_by_slug(params[:slug])
+    restaurant.update(params[:restaurant])
+    flash[:notice] = "#{restaurant.name} has been updated!"
+    redirect "/restaurants/#{restaurant.slug}"
   end
 
   delete "/restaurants/:slug/delete" do

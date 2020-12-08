@@ -5,7 +5,8 @@
 <h1><%=@restaurant.name%></h1>
 
 <% @restaurant.photos.each do |photo| %>
-<img src=<%=photo.url%> alt="Lots of Yummy Food <%=photo.url%>" class="restaurant_image" width="500" height="600">
+  
+  <img src="//:0" alt="Lots of Yummy Food <%=photo.url%>" class="restaurant_image" width="500" height="600">
 <% end %>
 
 <div class="sidebar">
@@ -21,12 +22,13 @@
     <% end %>
     <li><a href="<%=@restaurant.url%>"><%=@restaurant.name%> Website</a></li>
     <br>
-    <li><form action="/restaurants/<%=@restaurant.slug%>/edit" method="get">
+    
+    <li>
+    <form action="/restaurants/<%=@restaurant.slug%>/edit" method="get">
         <input type="submit" name="edit_restaurant" value= "Edit Restaurant Information">
         </form>
         </li>
     <br>
-
     <li><form action="/photos/new" method="get">
     <input id="hidden" type="hidden" name=photo[restaurant_id] value="<%=@restaurant.id%>">
     <input type="submit" value= "Post a Photo">

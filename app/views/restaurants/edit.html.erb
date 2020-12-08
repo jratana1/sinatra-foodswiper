@@ -1,1 +1,22 @@
-<h1>Insert the form to edit an instance of your model here.</h1>
+<h1>Edit information for <%=@restaurant.name%></h1>
+
+<form method="post" action="/restaurants/<%= @restaurant.slug %>">
+  <input id="hidden" type="hidden" name="_method" value="PATCH">
+  <label for="name"> Change Name:</label>
+  <input type="text" id="name" name="restaurant[name]" value='<%=@restaurant.name%>'>
+  <label for="display_phone"> Telephone:</label>
+  <input type="text" id="display_phone" name="restaurant[display_phone]" value='<%=@restaurant.display_phone%>'>
+  <br>
+  <label for="address"> Address:</label>
+  <input type="text" id="address" name="restaurant[address]" value='<%=@restaurant.address%>'>
+  <br>
+  <label for="city"> City:</label>
+  <input type="text" id="city" name="restaurant[city]" value='<%=@restaurant.city%>'>
+  <br>
+  <label for="sate"> State:</label>
+  <input type="text" id="state" name="restaurant[state]" value='<%=@restaurant.state%>'>
+  <br>
+  <label for="zip_code"> Zipcode:</label>
+  <input type="text" id="zip_code" name="restaurant[zip_code]" value='<%=@restaurant.zip_code%>'>
+  <input type="submit" value="submit">
+</form>

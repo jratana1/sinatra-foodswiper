@@ -68,7 +68,7 @@ class PhotosController < ApplicationController
     @photo = Photo.find(params[:id])
     if Helpers.current_user(session).id = @photo.user_id   
       Photo.find(params[:id]).destroy
-      flash[:notice] = "Your photo has been deleted!    
+      flash[:notice] = "Your photo has been deleted!"
     else
       flash[:notice] = "You can only delete photos you posted!"
     end
