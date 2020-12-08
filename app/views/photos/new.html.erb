@@ -11,6 +11,8 @@
       <br>
       <input id="photo_url" type="text" name="photo[url]">
       <input id="hidden" type="hidden" name=photo[restaurant_id] value="<%=params[:photo][:restaurant_id]%>">
+      <input id="hidden" type="hidden" name=photo[leftswipes] value=0>
+      <input id="hidden" type="hidden" name=photo[rightswipes] value=0>
       <input type="submit" value="Post Photo">
   </form>
 
@@ -29,6 +31,8 @@
             <option value="<%=restaurant.id%>" name="photo[restaurant_id]" id="restaurant_id"><%= restaurant.name %></option>
           <% end %>
         </select>
+        <input id="hidden" type="hidden" name=photo[leftswipes] value=0>
+        <input id="hidden" type="hidden" name=photo[rightswipes] value=0>
         <input type="submit" value="Post Photo">
       </form>
         
@@ -63,6 +67,8 @@
             <input id="restaurant_zipcode" type="text" name="restaurant[zip_code]"></input>
         <br>
         <br>
+        <input id="hidden" type="hidden" name=photo[leftswipes] value=0>
+        <input id="hidden" type="hidden" name=photo[rightswipes] value=0>
         <input type="submit" value="Post Photo">
       </form>
     <%end%>

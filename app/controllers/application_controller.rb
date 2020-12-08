@@ -15,15 +15,20 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/swipe" do
-    
+      
     if params.key?("photo")
+      @swipe = "right"
       @photo = Photo.find(params[:photo][:id])
-      erb :swipe
-    end
-    
-    rand_num= rand(1..Photo.all.size)
-    @photo = Photo.find(rand_num)
-    erb :swipe
+      
+      @restaurant = Restaurant.find(@photo.restaurant_id)
+      flash.now[:notice] = "You liked #{@restaurant.name}!"
+      erb :"/swipe"
+    else
+      @swipe = "left"
+      rand_num= rand(1..Photo.all.size)
+      @photo = Photo.find(rand_num)
+      erb :"/swipe"
+    end  
   end
 
   get '/login' do
@@ -50,7 +55,7 @@ class ApplicationController < Sinatra::Base
 
   get "/logout" do
     session.clear
-    flash[:notice] = "Logout complete.  Goodbye.!"
+    flash[:notice] = "Logout complete.  Goodbye!"
     redirect "/login"
   end
 end

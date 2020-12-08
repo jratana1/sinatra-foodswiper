@@ -1,8 +1,31 @@
-<ol>
-<li>Shows a random photo (logic in the application controller that retrieves random photo)</li>
-<li>button -> value=left  it redirects to swipe.erb</li>
-<li>button -> value=right it redirects to photo.restaurant page</li>
-</ol>
+<% if flash.has?(:notice) %>
+  <%= flash[:notice] %>
+<% end %>
+<br>
+
+<% if @swipe == "right" %>
+<form action="/swipe" method="get">
+    <input type="submit" value= "Swipe More!">
+</form>
+
+<img src=<%=@photo.url%> alt="Lots of Yummy Food <%=@photo.url%>" class="restaurant_image" width="500" height="600">
+
+<div class="sidebar">
+<ul>
+    <li><b><%=@restaurant.name%></b></li>
+    <li><%=@restaurant.address%></li>
+    <% if @restaurant.city != nil %>
+    <li><%=@restaurant.city%>, <%=@restaurant.state%> <%=@restaurant.zip_code%></li>
+    <% end %>
+    <li><%=@restaurant.display_phone%></li>
+    <% if @restaurant.rating != nil %>
+    <li><%=@restaurant.rating%>/5 stars</li>
+    <% end %>
+    <li><a href="<%=@restaurant.url%>"><%=@restaurant.name%> Website</a></li>
+    <br>
+</ul>
+</div>
+<% else %>
 <img src=<%=@photo.url%> alt="Lots of Yummy Food <%=@photo.url%>" class="restaurant_image" width="500" height="600">
 
 <form action="/swipe" method="get">
@@ -13,3 +36,6 @@
 <form action="/swipe" method="get">
     <input type="submit" value= "Swipe Left">
 </form>
+<% end %>
+
+
