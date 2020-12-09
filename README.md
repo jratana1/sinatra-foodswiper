@@ -1,6 +1,6 @@
 # Sinatra-FoodSwiper
 
-Welcome to your Sinatra-FoodSwiper.  Here
+Welcome to your Sinatra-FoodSwiper.
 
 ## Installation
 
@@ -16,10 +16,13 @@ Migrations:
 
     $ rake db:migrate
 
-
 ## Usage
 
 FoodSwiper is the tinder of eating.  No more reading and seraching throguh dozens of restaurants to decide what to eat.  Let your eyes and stomach speak for themselves.  You can swipes hundreds of photos from restaurants in your neighborhood or city in minutes.  See what you crave before you even know it.  All your swipes are saved and you can view them anytime.  
+
+Run Shotgun in the program directory:
+
+    Open http://localhost:9393/ in your browser
 
 Signup and begin swiping.  Explore restaurants in many cities around the world.
 
