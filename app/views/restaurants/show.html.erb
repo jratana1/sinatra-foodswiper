@@ -5,8 +5,7 @@
 <h1><%=@restaurant.name%></h1>
 
 <% @restaurant.photos.each do |photo| %>
-  
-  <img src="//:0" alt="Lots of Yummy Food <%=photo.url%>" class="restaurant_image" width="500" height="600">
+  <img src="<%=photo.url%>" alt="Lots of Yummy Food <%=photo.url%>" class="restaurant_image" width="500" height="600">
 <% end %>
 
 <div class="sidebar">

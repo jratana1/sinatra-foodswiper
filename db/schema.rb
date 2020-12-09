@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201203051958) do
+ActiveRecord::Schema.define(version: 20201209050318) do
 
   create_table "likes", force: :cascade do |t|
     t.integer  "restaurant_id"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20201203051958) do
     t.string   "state"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "image_url"
   end
 
   create_table "users", force: :cascade do |t|

@@ -9,6 +9,7 @@ class RestaurantsController < ApplicationController
   end
 
   get "/restaurants/:slug" do
+    
     @restaurant = Restaurant.find_by_slug(params[:slug])
     erb :"/restaurants/show.html"
   end
