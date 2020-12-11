@@ -14,13 +14,15 @@
     <link rel="stylesheet" href="/stylesheets/main.css" />
   </head>
   <body>
-   <h1> Welcome to FoodSwiper</h1>
+ 
+  <h1> Welcome to FoodSwiper</h1>
         <% if Helpers.is_logged_in?(session) %>
         <a href="/users/<%=User.find(session[:user_id]).slug%>">Home</a>
         <a href="/swipe">Swipe</a>
         <a href="/restaurants">All Places</a>
         <a href="/logout">Logout</a>
         <% end %>
+  
     <div class="wrapper">
 
         <%= yield %>
