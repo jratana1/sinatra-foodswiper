@@ -1,3 +1,4 @@
+require 'dotenv'
 Dotenv.load if ENV['SINATRA_ENV'] == "development"
 
 require 'bundler/setup'

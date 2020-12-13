@@ -22,6 +22,7 @@ group :development do
   gem 'tux'
   gem 'pry'
   gem 'shotgun'
+  gem 'dotenv', :groups => [:development]
 end
 
 group :production do

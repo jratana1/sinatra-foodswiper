@@ -23,7 +23,7 @@ class ApplicationController < Sinatra::Base
           @rest_hash = Helpers.yelp_hash_converter(restaurant)
           if @rest_hash[:image_url]         
             restaurant = Restaurant.create_with(@rest_hash).find_or_create_by(yelp_id: @rest_hash[:yelp_id])
-            restaurant.photos << Photo.create(url:restaurant.image_url,leftswipes:0,rightswipes:0)
+            restaurant.photos << Photo.create_with(url:restaurant.image_url,leftswipes:0,rightswipes:0).find_or_create_by(url: restaurant.image_url)
           end
       end
     else
