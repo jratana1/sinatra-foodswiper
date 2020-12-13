@@ -16,6 +16,7 @@ gem 'rack-flash3'
 gem "json"
 gem "http"
 gem "optparse"
+gem 'dotenv'
 
 group :development do
   gem 'sqlite3', '~> 1.3.6'
