@@ -40,7 +40,7 @@ class UsersController < ApplicationController
   get "/users/:slug/edit" do
     @user = User.find_by_slug(params[:slug])
     
-    if Helpers.current_user(session).id = @user.id    
+    if Helpers.current_user(session).id == @user.id  && Helpers.is_logged_in?(session)
         erb :'users/edit'
     else
         redirect '/login'
@@ -73,9 +73,14 @@ class UsersController < ApplicationController
   end
 
   delete '/users/:slug/delete' do
+    user = find_by_slug(params[:slug])
+    if Helpers.current_user(session).id == user.id
     User.find(session[:user_id]).destroy
     session.clear
     flash[:notice] = "Your account has been deleted!"
     redirect "/users/new"
+    else
+      redirect "/users/#{user.slug}"
+    end
   end
 end

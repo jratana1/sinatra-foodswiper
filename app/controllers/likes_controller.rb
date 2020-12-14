@@ -15,10 +15,9 @@ class LikesController < ApplicationController
     # POST: /likes
     post "/likes" do
       if Helpers.is_logged_in?(session) 
-        Like.create(user_id:session[:user_id], restaurant_id:params[:like][:restaurant_id])
-        restaurant = Restaurant.find(params[:like][:restaurant_id])
-        flash[:notice] = "You now like #{restaurant.name}."
-        redirect "/restaurants/#{restaurant.slug}"
+        like = Like.create(user_id:session[:user_id], restaurant_id:params[:like][:restaurant_id])
+        flash[:notice] = "You now like #{like.restaurant.name}."
+        redirect "/restaurants/#{like.restaurant.slug}"
       else
         flash[:notice] = "You must login to Like restaurants"
         redirect '/sessions/login'
@@ -43,8 +42,7 @@ class LikesController < ApplicationController
     # DELETE: /likes/delete
     delete "/likes/delete" do
       if Helpers.is_logged_in?(session)
-        restaurant = Restaurant.find(params[:like][:restaurant_id])
-        like = Like.find_by(user_id: session[:user_id],restaurant_id:"#{restaurant.id}")
+        like = Helpers.current_user(session).likes.find_by(restaurant_id: params[:like][:restaurant_id])
         if like != nil
           like.destroy
           flash[:notice] = "You have unliked #{restaurant.name}."

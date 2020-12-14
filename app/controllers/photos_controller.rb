@@ -21,31 +21,37 @@ class PhotosController < ApplicationController
 
   # POST: /photos
     post "/photos" do
+ 
         if params[:photo][:url] == ""
           flash[:notice] = "You did not input a url!"
           erb :"/photos/new.html"
-        end
-        
-        if params.key?("restaurant")  
+        elsif params.key?("restaurant")  
           if params[:restaurant][:name] == ""
             flash[:notice] = "You did not input a restaurant name!"
             erb :"/photos/new.html"
+          else
+            restaurant = Restaurant.create(params[:restaurant])
+            photo = Photo.create(params[:photo])
+            restaurant.photos << photo
+            User.find(session[:user_id]).photos << photo
+            flash[:notice] = "Photo/Restaurant has been added!"
+            redirect "/restaurants/#{restaurant.slug}"
           end
-          restaurant = Restaurant.create(params[:restaurant])
         else
           restaurant = Restaurant.find(params[:photo][:restaurant_id])
+          photo = Photo.create(params[:photo])
+          restaurant.photos << photo
+          User.find(session[:user_id]).photos << photo
+          flash[:notice] = "Photo/Restaurant has been added!"
+          redirect "/restaurants/#{restaurant.slug}"
         end
-        photo = Photo.create(params[:photo])
-        restaurant.photos << photo
-        User.find(session[:user_id]).photos << photo
-        flash[:notice] = "Photo/Restaurant has been added!"
-        redirect "/restaurants/#{restaurant.slug}"
+      
   end
 
   # GET: /photos/5
   get "/photos/:id" do
     @photo = Photo.find(params[:id])
-    if Helpers.current_user(session).id = @photo.user_id   
+    if Helpers.current_user(session).id == @photo.user_id   
     erb :"/photos/show.html"
     else
       flash[:notice] = "You can only view and delete photos you posted"
@@ -66,7 +72,7 @@ class PhotosController < ApplicationController
   # DELETE: /photos/5/delete
   delete "/photos/:id/delete" do
     @photo = Photo.find(params[:id])
-    if Helpers.current_user(session).id = @photo.user_id   
+    if Helpers.current_user(session).id == @photo.user_id   
       Photo.find(params[:id]).destroy
       flash[:notice] = "Your photo has been deleted!"
     else
