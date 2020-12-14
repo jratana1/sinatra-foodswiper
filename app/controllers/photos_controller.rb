@@ -25,18 +25,16 @@ class PhotosController < ApplicationController
         if params[:photo][:url] == ""
           flash[:notice] = "You did not input a url!"
           erb :"/photos/new.html"
-        elsif params.key?("restaurant")  
-          if params[:restaurant][:name] == ""
+        elsif params.key?("restaurant")  && params[:restaurant][:name] == ""
             flash[:notice] = "You did not input a restaurant name!"
             erb :"/photos/new.html"
-          else
+        elsif params.key?("restaurant")
             restaurant = Restaurant.create(params[:restaurant])
             photo = Photo.create(params[:photo])
             restaurant.photos << photo
             User.find(session[:user_id]).photos << photo
             flash[:notice] = "Photo/Restaurant has been added!"
             redirect "/restaurants/#{restaurant.slug}"
-          end
         else
           restaurant = Restaurant.find(params[:photo][:restaurant_id])
           photo = Photo.create(params[:photo])
