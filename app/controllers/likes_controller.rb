@@ -41,20 +41,18 @@ class LikesController < ApplicationController
   
     # DELETE: /likes/delete
     delete "/likes/delete" do
-      if Helpers.is_logged_in?(session)
-        like = Helpers.current_user(session).likes.find_by(restaurant_id: params[:like][:restaurant_id])
-        if like != nil
+      like = Helpers.current_user(session).likes.find_by(restaurant_id: params[:like][:restaurant_id])
+
+      if Helpers.is_logged_in?(session) && like != nil
           like.destroy
-          flash[:notice] = "You have unliked #{restaurant.name}."
-          redirect "/restaurants/#{restaurant.slug}"
-        else
-          flash[:notice] = "You already don't like #{restaurant.name}."
-          redirect "/restaurants/#{restaurant.slug}"
-        end
-          redirect "/restaurants/#{restaurant.slug}"
-      else
-        flash[:notice] = "You must login to UnLike restaurants"
-        redirect '/sessions/login'
+          flash[:notice] = "You have unliked #{like.restaurant.name}."
+          redirect "/users/#{Helpers.current_user(session).slug}"
+      elsif Helpers.is_logged_in?(session) == false
+          flash[:notice] = "You must login to UnLike restaurants"
+          redirect '/sessions/login'
+      elsif Helpers.is_logged_in?(session) && like == nil
+          flash[:notice] = "You already don't like that restaurant."
+          redirect "/users/#{Helpers.current_user(session).slug}"
       end
     end
   end
