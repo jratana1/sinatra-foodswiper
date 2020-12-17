@@ -46,8 +46,10 @@ class LikesController < ApplicationController
         if like != nil
           like.destroy
           flash[:notice] = "You have unliked #{restaurant.name}."
+          redirect "/restaurants/#{restaurant.slug}"
         else
           flash[:notice] = "You already don't like #{restaurant.name}."
+          redirect "/restaurants/#{restaurant.slug}"
         end
           redirect "/restaurants/#{restaurant.slug}"
       else
